@@ -1,26 +1,48 @@
-import React from 'react';
-import { Card, CardContent, CardActions, Typography, Button } from '@mui/material';
-import PeopleIcon from '@mui/icons-material/People';
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import "./Dashboard.css";
 
-const UserView = () => {
+function UserDashboard() {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    navigate("/login");
+  };
+
   return (
-    <Card sx={{ maxWidth: 700, margin: '40px auto' }}>
-      <CardContent>
-        <Typography variant="h4" gutterBottom>
-          <PeopleIcon sx={{ verticalAlign: 'middle', mr: 1 }} />
-          Passenger Dashboard
-        </Typography>
-        <Typography variant="body1" color="text.secondary" paragraph>
-          View bus schedules, purchase tickets, and track buses in real-time.
-        </Typography>
-      </CardContent>
-      <CardActions>
-        <Button variant="contained" color="primary">Buy Ticket</Button>
-        <Button variant="outlined">Bus Schedules</Button>
-        <Button variant="outlined">Track Bus</Button>
-      </CardActions>
-    </Card>
-  );
-};
+    <div className="dashboard-container">
+      <div className="dashboard-header">
+        <h1>User Dashboard</h1>
+        <button className="logout-btn" onClick={handleLogout}>Logout</button>
+      </div>
+      
+      <div className="dashboard-content">
+        <div className="welcome-card">
+          <h2>Welcome User!</h2>
+          <p>You have access to standard user features.</p>
+        </div>
 
-export default UserView;
+        <div className="features-grid">
+          <div className="feature-card">
+            <h3>🎟️ Book Tickets</h3>
+            <p>Book bus tickets online</p>
+          </div>
+          <div className="feature-card">
+            <h3>🔍 Track Bus</h3>
+            <p>Track buses in real-time</p>
+          </div>
+          <div className="feature-card">
+            <h3>📋 My Bookings</h3>
+            <p>View your ticket history</p>
+          </div>
+          <div className="feature-card">
+            <h3>💬 Support</h3>
+            <p>Contact customer support</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default UserDashboard;

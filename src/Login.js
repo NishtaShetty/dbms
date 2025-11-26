@@ -1,106 +1,86 @@
-// src/Login.js
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import {
-  Container,
-  Box,
-  Typography,
-  TextField,
-  Button,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-} from '@mui/material';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import "./Login.css";
 
-const Login = ({ onLogin }) => {
-  const [username, setUsername] = useState('');
-  const [role, setRole] = useState('');
-  const [error, setError] = useState('');
+// Define users with roles
+const users = {
+  admin: { password: "admin123", role: "admin" },
+  officer: { password: "officer123", role: "officer" },
+  user: { password: "user123", role: "user" },
+};
+
+function LoginPage({ onLogin }) {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
 
-  const roles = ['user', 'ticketCollector', 'officer'];
-
-  const handleLogin = () => {
-    if (!username || !role) {
-      setError('Please enter username and select role');
-      return;
-    }
-    setError('');
-    // Pass logged-in info to parent
-    onLogin({ username, role });
-    // Redirect based on role
-    switch (role) {
-      case 'user':
-        navigate('/user');
-        break;
-      case 'ticketCollector':
-        navigate('/ticket-collector');
-        break;
-      case 'officer':
-        navigate('/officer');
-        break;
-      default:
-        navigate('/');
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setError(null);
+    
+    if (users[username] && users[username].password === password) {
+      const role = users[username].role;
+      onLogin(role);
+      
+      // Navigate based on role
+      if (role === "admin") {
+        navigate("/admin");
+      } else if (role === "officer") {
+        navigate("/officer");
+      } else if (role === "user") {
+        navigate("/user");
+      }
+    } else {
+      setError("Invalid username or password");
     }
   };
 
   return (
-    <Container maxWidth="sm" sx={{ mt: 8 }}>
-      <Box
-        sx={{
-          padding: 4,
-          borderRadius: 2,
-          boxShadow: 3,
-          backgroundColor: 'background.paper',
-        }}
-      >
-        <Typography variant="h4" mb={3} align="center">
-          Login
-        </Typography>
+    <div className="login-container">
+      <div className="login-box">
+        <h1>BMTC Dashboard</h1>
+        <h2>Login</h2>
+        
+        {error && <div className="error-message">{error}</div>}
 
-        <TextField
-          label="Username"
-          fullWidth
-          margin="normal"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-        />
+        <form onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label htmlFor="username">Username</label>
+            <input
+              id="username"
+              type="text"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              placeholder="Enter username"
+              required
+            />
+          </div>
 
-        <FormControl fullWidth margin="normal">
-          <InputLabel id="role-label">Select Role</InputLabel>
-          <Select
-            labelId="role-label"
-            label="Select Role"
-            value={role}
-            onChange={(e) => setRole(e.target.value)}
-          >
-            {roles.map((r) => (
-              <MenuItem key={r} value={r}>
-                {r.charAt(0).toUpperCase() + r.slice(1)}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
+          <div className="form-group">
+            <label htmlFor="password">Password</label>
+            <input
+              id="password"
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Enter password"
+              required
+            />
+          </div>
 
-        {error && (
-          <Typography color="error" mt={2} mb={1}>
-            {error}
-          </Typography>
-        )}
+          <button type="submit" className="login-btn">Log In</button>
+        </form>
 
-        <Button
-          variant="contained"
-          color="primary"
-          fullWidth
-          sx={{ mt: 3 }}
-          onClick={handleLogin}
-        >
-          Login
-        </Button>
-      </Box>
-    </Container>
+        <div className="demo-credentials">
+          <p><strong>Demo Credentials:</strong></p>
+          <p>Admin: <code>admin</code> / <code>admin123</code></p>
+          <p>Officer: <code>officer</code> / <code>officer123</code></p>
+          <p>User: <code>user</code> / <code>user123</code></p>
+        </div>
+      </div>
+    </div>
   );
-};
+}
 
-export default Login;
+export default LoginPage;

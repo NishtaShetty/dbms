@@ -1,84 +1,75 @@
-// src/App.js
-import React, { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import Navigation from './Navigation'; // Move Navigation to separate file or inline below
-import Login from './Login';
-import TicketCollectorView from './TicketCollectorView';
-import UserView from './UserView';
-import OfficerView from './OfficerView';
+import React, { useState } from "react";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
+import LoginPage from "./Login";
+import AdminDashboard from "./OfficerView";
+import OfficerDashboard from "./OfficerDashboard";
+import UserDashboard from "./UserView";
+import Unauthorized from "./Unauthorized";
 
-// PrivateRoute component for role-based access
-const PrivateRoute = ({ children, isAuthenticated, allowedRoles, userRole }) => {
-  if (!isAuthenticated) return <Navigate to="/login" />;
-  if (!allowedRoles.includes(userRole)) return <Navigate to="/" />;
-  return children;
+// Role-based route wrapper
+const RoleBasedRoute = ({ children, allowedRoles, userRole }) => {
+  if (!userRole) {
+    // Not logged in redirect to login
+    return <Navigate to="/login" replace />;
+  }
+  if (allowedRoles.includes(userRole)) {
+    return children;
+  } else {
+    // Role not authorized
+    return <Navigate to="/unauthorized" replace />;
+  }
 };
 
 function App() {
-  const [auth, setAuth] = useState({ isAuthenticated: false, userRole: null });
-
-  const handleLogin = ({ username, role }) => {
-    // Here you can add real authentication logic.
-    // For demo, just set auth state.
-    setAuth({ isAuthenticated: true, userRole: role });
-  };
+  const [userRole, setUserRole] = useState(null);
 
   return (
     <Router>
-      <Navigation isAuthenticated={auth.isAuthenticated} />
       <Routes>
         <Route
-          path="/"
-          element={
-            auth.isAuthenticated ? (
-              <Navigate to={`/${auth.userRole}`} />
-            ) : (
-              <Navigate to="/login" />
-            )
-          }
+          path="/login"
+          element={<LoginPage onLogin={(role) => setUserRole(role)} />}
         />
-        <Route path="/login" element={<Login onLogin={handleLogin} />} />
+
         <Route
-          path="/user"
+          path="/admin"
           element={
-            <PrivateRoute
-              isAuthenticated={auth.isAuthenticated}
-              allowedRoles={['user']}
-              userRole={auth.userRole}
-            >
-              <UserView />
-            </PrivateRoute>
+            <RoleBasedRoute allowedRoles={["admin"]} userRole={userRole}>
+              <AdminDashboard />
+            </RoleBasedRoute>
           }
         />
-        <Route
-          path="/ticket-collector"
-          element={
-            <PrivateRoute
-              isAuthenticated={auth.isAuthenticated}
-              allowedRoles={['ticketCollector']}
-              userRole={auth.userRole}
-            >
-              <TicketCollectorView />
-            </PrivateRoute>
-          }
-        />
+
         <Route
           path="/officer"
           element={
-            <PrivateRoute
-              isAuthenticated={auth.isAuthenticated}
-              allowedRoles={['officer']}
-              userRole={auth.userRole}
-            >
-              <OfficerView />
-            </PrivateRoute>
+            <RoleBasedRoute allowedRoles={["officer"]} userRole={userRole}>
+              <OfficerDashboard />
+            </RoleBasedRoute>
           }
         />
-        <Route path="*" element={<h2>Page Not Found</h2>} />
+
+        <Route
+          path="/user"
+          element={
+            <RoleBasedRoute allowedRoles={["user"]} userRole={userRole}>
+              <UserDashboard />
+            </RoleBasedRoute>
+          }
+        />
+
+        <Route path="/unauthorized" element={<Unauthorized />} />
+
+        {/* Default route */}
+        <Route path="*" element={<Navigate to="/login" replace />} />
       </Routes>
     </Router>
   );
 }
 
 export default App;
-
