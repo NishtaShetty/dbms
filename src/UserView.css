@@ -1,0 +1,382 @@
+/* Notification Toast */
+.notification {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  min-width: 320px;
+  max-width: 500px;
+  padding: 16px 24px;
+  border-radius: 12px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  animation: slideInRight 0.35s cubic-bezier(0.4, 0, 0.2, 1), slideOutRight 0.35s cubic-bezier(0.4, 0, 0.2, 1) 3.65s;
+  z-index: 9999;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(10px);
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideOutRight {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+.notification-info {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.notification-success {
+  background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+  color: white;
+}
+
+.notification-warning {
+  background: linear-gradient(135deg, #FFC107 0%, #ffb300 100%);
+  color: #333;
+}
+
+.notification-error {
+  background: linear-gradient(135deg, #F44336 0%, #da190b 100%);
+  color: white;
+}
+
+.notification-content {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.notification-message {
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  line-height: 1.4;
+}
+
+.notification-progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.4);
+  animation: progress 4s linear;
+}
+
+@keyframes progress {
+  from {
+    width: 100%;
+  }
+  to {
+    width: 0;
+  }
+}
+
+.search-section {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 30px;
+  border-radius: 12px;
+  margin: 20px 0;
+  color: white;
+}
+
+.search-section h3 {
+  margin-top: 0;
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.search-container {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+  align-items: flex-end;
+}
+
+.select-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+  min-width: 200px;
+}
+
+.select-group label {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.select-input {
+  padding: 12px 15px;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  background-color: white;
+  color: #333;
+  cursor: pointer;
+  transition: box-shadow 0.3s ease;
+}
+
+.select-input:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.3);
+}
+
+.search-btn {
+  padding: 12px 30px;
+  background-color: #FF6B6B;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.search-btn:hover {
+  background-color: #FF5252;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 107, 107, 0.3);
+}
+
+/* Results Section */
+.results-section {
+  margin: 30px 0;
+}
+
+.results-section h3 {
+  font-size: 22px;
+  color: #333;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 3px solid #667eea;
+}
+
+.buses-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.bus-card {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+}
+
+.bus-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  border-color: #667eea;
+}
+
+.bus-header {
+  margin-bottom: 15px;
+}
+
+.bus-header h4 {
+  margin: 0;
+  font-size: 20px;
+  color: #333;
+}
+
+.bus-info {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.crowding-indicator {
+  width: 100%;
+  height: 8px;
+  background-color: #e0e0e0;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.crowding-bar {
+  height: 100%;
+  transition: width 0.3s ease;
+}
+
+.crowding-text,
+.crowding-level,
+.passengers {
+  margin: 0;
+  font-size: 14px;
+  color: #666;
+}
+
+.crowding-text strong,
+.crowding-level strong {
+  color: #333;
+}
+
+.click-hint {
+  color: #667eea;
+  font-size: 13px;
+  font-weight: 600;
+  margin-top: 8px;
+}
+
+.no-results {
+  text-align: center;
+  color: #999;
+  font-size: 16px;
+  padding: 40px 20px;
+  background: #f5f5f5;
+  border-radius: 8px;
+}
+
+/* Details Section */
+.details-section {
+  background: white;
+  border-radius: 12px;
+  padding: 30px;
+  margin-top: 30px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+.close-btn {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: #FF6B6B;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background 0.3s ease;
+}
+
+.close-btn:hover {
+  background: #FF5252;
+}
+
+.details-section h3 {
+  font-size: 22px;
+  color: #333;
+  margin-bottom: 25px;
+  margin-top: 0;
+}
+
+.stops-container {
+  overflow-x: auto;
+}
+
+.stops-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.stops-table thead {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.stops-table th {
+  padding: 15px;
+  text-align: left;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.stops-table td {
+  padding: 15px;
+  border-bottom: 1px solid #e0e0e0;
+  font-size: 14px;
+  color: #333;
+}
+
+.stop-row:hover {
+  background-color: #f9f9f9;
+}
+
+.stop-name {
+  font-weight: 600;
+  color: #667eea;
+}
+
+.crowding-cell {
+  display: flex;
+  justify-content: center;
+}
+
+.crowding-badge {
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 13px;
+}
+
+.crowding-badge.current {
+  background-color: #E3F2FD;
+  color: #1976D2;
+}
+
+.crowding-badge.predicted {
+  background-color: #FFF3E0;
+  color: #E65100;
+}
+
+.time {
+  color: #999;
+  font-size: 13px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .search-container {
+    flex-direction: column;
+  }
+
+  .select-group {
+    min-width: 100%;
+  }
+
+  .buses-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .stops-table {
+    font-size: 12px;
+  }
+
+  .stops-table th,
+  .stops-table td {
+    padding: 10px;
+  }
+
+  .notification {
+    top: 10px;
+    right: 10px;
+    left: 10px;
+    min-width: auto;
+    max-width: none;
+  }
+}
