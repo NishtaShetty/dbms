@@ -1,9 +1,9 @@
-Steps to do:
-npm install
-npm start # to runn
+Steps to do:<br>
+npm install<br>
+npm start # to runn<br>
 
 
-login credentionals:
-User name :"conductor", password: "conductor123"
-User name :"officer" ,password: "officer123" 
-User name :"user",password: "user123"
+login credentionals:<br>
+User name :"conductor", password: "conductor123"<br>
+User name :"officer" ,password: "officer123" <br>
+User name :"user",password: "user123"<br>
