@@ -6,10 +6,9 @@ import {
   Navigate,
 } from "react-router-dom";
 import LoginPage from "./Login";
-import AdminDashboard from "./OfficerView";
+import TicketCollector from "./TicketCollector";
 import OfficerDashboard from "./OfficerDashboard";
 import UserDashboard from "./UserView";
-import Unauthorized from "./Unauthorized";
 
 // Role-based route wrapper
 const RoleBasedRoute = ({ children, allowedRoles, userRole }) => {
@@ -20,8 +19,8 @@ const RoleBasedRoute = ({ children, allowedRoles, userRole }) => {
   if (allowedRoles.includes(userRole)) {
     return children;
   } else {
-    // Role not authorized
-    return <Navigate to="/unauthorized" replace />;
+    // Role not authorized, redirect to login
+    return <Navigate to="/login" replace />;
   }
 };
 
@@ -37,10 +36,10 @@ function App() {
         />
 
         <Route
-          path="/admin"
+          path="/conductor"
           element={
-            <RoleBasedRoute allowedRoles={["admin"]} userRole={userRole}>
-              <AdminDashboard />
+            <RoleBasedRoute allowedRoles={["conductor"]} userRole={userRole}>
+              <TicketCollector />
             </RoleBasedRoute>
           }
         />
@@ -62,8 +61,6 @@ function App() {
             </RoleBasedRoute>
           }
         />
-
-        <Route path="/unauthorized" element={<Unauthorized />} />
 
         {/* Default route */}
         <Route path="*" element={<Navigate to="/login" replace />} />

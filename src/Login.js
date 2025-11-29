@@ -4,7 +4,7 @@ import "./Login.css";
 
 // Define users with roles
 const users = {
-  admin: { password: "admin123", role: "admin" },
+  conductor: { password: "conductor123", role: "conductor" },
   officer: { password: "officer123", role: "officer" },
   user: { password: "user123", role: "user" },
 };
@@ -24,8 +24,8 @@ function LoginPage({ onLogin }) {
       onLogin(role);
       
       // Navigate based on role
-      if (role === "admin") {
-        navigate("/admin");
+      if (role === "conductor") {
+        navigate("/conductor");
       } else if (role === "officer") {
         navigate("/officer");
       } else if (role === "user") {
@@ -39,7 +39,7 @@ function LoginPage({ onLogin }) {
   return (
     <div className="login-container">
       <div className="login-box">
-        <h1>BMTC Dashboard</h1>
+        <h1>BMTC</h1>
         <h2>Login</h2>
         
         {error && <div className="error-message">{error}</div>}
@@ -72,12 +72,8 @@ function LoginPage({ onLogin }) {
           <button type="submit" className="login-btn">Log In</button>
         </form>
 
-        <div className="demo-credentials">
-          <p><strong>Demo Credentials:</strong></p>
-          <p>Admin: <code>admin</code> / <code>admin123</code></p>
-          <p>Officer: <code>officer</code> / <code>officer123</code></p>
-          <p>User: <code>user</code> / <code>user123</code></p>
-        </div>
+       
+
       </div>
     </div>
   );
